@@ -17,7 +17,6 @@
   <header><?php require_once('./views/organisms/navbar.php'); ?></header>
     <main>
       <?php 
-      var_dump($_GET);
       loadPages($page); ?>
     </main>
   <footer><?php require_once('./views/organisms/footer.php'); ?></footer>
