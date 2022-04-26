@@ -1,0 +1,26 @@
+$heightnav: 60px;
+
+body {
+  margin: $heightnav 0 0 0;
+}
+header {
+  display: flex;
+  background-color: var(--color-1);
+  position: absolute;
+  margin: 0;
+  inset: 0 0 auto 0;
+  nav {
+    display: flex;
+    ul {
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+      gap: 3rem;
+      li {
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
