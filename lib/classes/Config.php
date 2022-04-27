@@ -1,7 +1,7 @@
 <?php
 define("URLROOT", 'http://www.project-p4.gg/index/');
 
-class Database {
+class Config {
   private $servername = "localhost";
   private $username = "root";
   private $password = "";

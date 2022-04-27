@@ -1,5 +1,5 @@
 <?php
-class Post extends Database
+class Post extends Config
 {
   public function GetPosts() {
     
