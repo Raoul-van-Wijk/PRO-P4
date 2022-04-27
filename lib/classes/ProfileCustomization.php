@@ -40,7 +40,7 @@ class ProfileCustomization extends Config
       // bio is empty
     }
     if(!empty($this->bio) || isset($_SESSION['userID'])) {
-      $sql = "UPDATE `userprofile` SET `bio` = ':bio' WHERE `userprofile`.`userID` = :userID";
+      $sql = "UPDATE `userprofile` SET `bio` = :bio WHERE `userprofile`.`userID` = :userID";
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(":bio", $this->bio);
       $stmt->bindParam(":userID", $this->userID);
@@ -58,7 +58,7 @@ class ProfileCustomization extends Config
       // pfp is empty
     }
     if(!empty($this->pfp) || isset($_SESSION['userID'])) {
-      $sql = "UPDATE `userprofile` SET `profilePicture` = ':pfp' WHERE `userprofile`.`userID` = :userID";
+      $sql = "UPDATE `userprofile` SET `profilePicture` = :pfp WHERE `userprofile`.`userID` = :userID";
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(":pfp", $this->pfp);
       $stmt->bindParam(":userID", $this->userID);
@@ -76,7 +76,7 @@ class ProfileCustomization extends Config
       // bgimg is empty
     }
     if(!empty($this->bgimg) || isset($_SESSION['userID'])) {
-      $sql = "UPDATE `userprofile` SET `backGroundImage` = ':bgimg' WHERE `userprofile`.`userID` = :userID";
+      $sql = "UPDATE `userprofile` SET `backGroundImage` = :bgimg WHERE `userprofile`.`userID` = :userID";
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(":bgimg", $this->bgimg);
       $stmt->bindParam(":userID", $this->userID);
