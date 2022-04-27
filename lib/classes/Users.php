@@ -1,5 +1,5 @@
 <?php
-class Users extends Database {
+class Users extends Config {
   public function getUsers() {
     $sql = "SELECT * FROM users";
     $stmt = $this->connect()->query($sql);
@@ -13,11 +13,12 @@ class Users extends Database {
       echo "One or more fields are empty";
       header("Refresh: 2; ".URLROOT."page/{$_GET['page']}&lr=register");
     } else {
-      $sql = "INSERT INTO `users` (`userID`, `username`, `password`, `profilePicture`, `bio`, `age`) VALUES (NULL, :username, :password, NULL, NULL, :age)";
+      $sql = "INSERT INTO `users` (`userID`, `username`, `password`, `age`) VALUES (NULL, :username, :password, :age)";
       $stmt = $this->connect()->prepare($sql);
       $pwh = password_hash($password, PASSWORD_BCRYPT);
       $files = new Files($username);
       $files->makeDir();
+    
 
       $stmt->bindParam(':username', $username);
       $stmt->bindParam(':password', $pwh);
@@ -55,6 +56,10 @@ class Users extends Database {
           echo "Password does not match";
           header("Refresh: 2; ".URLROOT."/page/{$_GET['page']}?lr=register");
         } else {
+          if($loginCredentials['firstLogin'] == 1) {
+            $mkNewProfile = new ProfileCustomization($loginCredentials['userID']);
+            $mkNewProfile->addUserProfile();
+          }
           echo 'You succesfully logged in';
           $_SESSION['userID'] = $loginCredentials['userID'];
           $_SESSION['username'] = $username;
