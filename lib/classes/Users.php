@@ -8,21 +8,21 @@ class Users extends Database {
     }
   }
 
-  function registerNewUser($username, $password, $profilePicture, $bio, $age):void {  
+  function registerNewUser($username, $password, $age):void {  
     if(empty($username) || empty($password)) {
       echo "One or more fields are empty";
       header("Refresh: 2; ".URLROOT."page/{$_GET['page']}&lr=register");
     } else {
-      $sql = "INSERT INTO `users` (`userID`, `username`, `password`, `profilePicture`, `bio`, `age`) VALUES (NULL, :username, :password, :profilePicture, :bio, :age)";
+      $sql = "INSERT INTO `users` (`userID`, `username`, `password`, `profilePicture`, `bio`, `age`) VALUES (NULL, :username, :password, NULL, NULL, :age)";
       $stmt = $this->connect()->prepare($sql);
       $pwh = password_hash($password, PASSWORD_BCRYPT);
+      $files = new Files($username);
+      $files->makeDir();
+
       $stmt->bindParam(':username', $username);
       $stmt->bindParam(':password', $pwh);
-      $stmt->bindParam(':profilePicture', $profilePicture);
-      $stmt->bindParam(':bio', $bio);
       $stmt->bindParam(':age', $age);
       if($stmt->execute()) {
-        
         echo "Succesfully created a new user";
       } else {
         echo "An error occured";
