@@ -14,7 +14,7 @@ class ProfileCustomization extends Config
   }
   // add User Profile function
   public function addUserProfile() {
-    if(!empty($this->userID)) {
+    if(empty($this->userID)) {
       //user is not logged in
     }
     if(!empty($this->userID)) {
@@ -23,15 +23,68 @@ class ProfileCustomization extends Config
       $stmt->bindParam(':userID', $this->userID);
       if($stmt->execute()) {
         // succesfully made a new user Profile
+        $sql = "UPDATE `users` SET `firstLogin` = '0' WHERE `users`.`userID` = :userID";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->bindParam(':userID', $this->userID);
+        if($stmt->execute()) {
+          //succes
+        }
+      } else {
+        // something went wrong
+      }
+    }
+  }
+  // change bio function
+  public function updateBio() {
+    if(empty($this->bio) || !isset($_SESSION['userID'])) {
+      // bio is empty
+    }
+    if(!empty($this->bio) || isset($_SESSION['userID'])) {
+      $sql = "UPDATE `userprofile` SET `bio` = ':bio' WHERE `userprofile`.`userID` = :userID";
+      $stmt = $this->connect()->prepare($sql);
+      $stmt->bindParam(":bio", $this->bio);
+      $stmt->bindParam(":userID", $this->userID);
+      if($stmt->execute()) {
+        // succesfully updated bio
       } else {
         // something went wrong
       }
     }
   }
 
-  // change bio function
-
   // change pfp function
+  public function updateProfilePicture() {
+    if(empty($this->pfp) || !isset($_SESSION['userID'])) {
+      // pfp is empty
+    }
+    if(!empty($this->pfp) || isset($_SESSION['userID'])) {
+      $sql = "UPDATE `userprofile` SET `profilePicture` = ':pfp' WHERE `userprofile`.`userID` = :userID";
+      $stmt = $this->connect()->prepare($sql);
+      $stmt->bindParam(":pfp", $this->pfp);
+      $stmt->bindParam(":userID", $this->userID);
+      if($stmt->execute()) {
+        // succesfully updated pfp
+      } else {
+        // something went wrong
+      }
+    }
+  }
 
   // change backgroundImage function
+  public function UpdateBackgroundImage() {
+    if(empty($this->bgimg) || !isset($_SESSION['userID'])) {
+      // bgimg is empty
+    }
+    if(!empty($this->bgimg) || isset($_SESSION['userID'])) {
+      $sql = "UPDATE `userprofile` SET `backGroundImage` = ':bgimg' WHERE `userprofile`.`userID` = :userID";
+      $stmt = $this->connect()->prepare($sql);
+      $stmt->bindParam(":bgimg", $this->bgimg);
+      $stmt->bindParam(":userID", $this->userID);
+      if($stmt->execute()) {
+        // succesfully updated bgimg
+      } else {
+        // something went wrong
+      }
+    }
+  }
 }
