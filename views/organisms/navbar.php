@@ -1,6 +1,7 @@
 <nav>
   <ul>
-    <li><a href="<?php echo URLROOT;?>index/page/home">home</a></li>
+    <li><a href="<?php echo URLROOT;?>page/home">home</a></li>
+    <li><a href="<?php echo URLROOT;?>page/chat">Chat</a></li>
 
     <?php
     if(isset($_SESSION['userID'])) {

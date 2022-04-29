@@ -28,19 +28,19 @@ class Users extends Config {
       } else {
         echo "An error occured";
       }
-      header("Refresh: 3; ".URLROOT."page=home");
+      header("Refresh: 3; ".URLROOT."page/home");
     }
   }
 
   public function loginUsers($username, $password) {
     if(isset($_SESSION['userID'])) {
       echo "Already logged in";
-      header("Refresh: 2; ".URLROOT."page=home");
+      header("Refresh: 2; ".URLROOT."page/home");
       return false;
     }
     if(empty($username) || empty($password)) {
       echo "One or more fields are empty";
-      header("Refresh: 2; ".URLROOT."/page/{$_GET['page']}?lr=register");
+      header("Refresh: 2; ".URLROOT."page/{$_GET['page']}?lr=register");
     } else {
       $sql = "SELECT * FROM `users` WHERE `username` = :username";
       $stmt = $this->connect()->prepare($sql);
@@ -49,12 +49,12 @@ class Users extends Config {
       $count = $stmt->rowCount();
       if($count == 0) {
         echo "User does not exist";
-        header("Refresh: 2; ".URLROOT."/page/{$_GET['page']}?lr=register");
+        header("Refresh: 2; ".URLROOT."page/{$_GET['page']}?lr=register");
       } else {
         $loginCredentials = $stmt->fetch();
         if(!password_verify($password, $loginCredentials['password'])) {
           echo "Password does not match";
-          header("Refresh: 2; ".URLROOT."/page/{$_GET['page']}?lr=register");
+          header("Refresh: 2; ".URLROOT."page/{$_GET['page']}?lr=register");
         } else {
           if($loginCredentials['firstLogin'] == 1) {
             $mkNewProfile = new ProfileCustomization($loginCredentials['userID']);
@@ -63,7 +63,7 @@ class Users extends Config {
           echo 'You succesfully logged in';
           $_SESSION['userID'] = $loginCredentials['userID'];
           $_SESSION['username'] = $username;
-          header("Refresh: 2; ".URLROOT."/page/home");
+          header("Refresh: 2; ".URLROOT."page/home");
         }
       }
     }
