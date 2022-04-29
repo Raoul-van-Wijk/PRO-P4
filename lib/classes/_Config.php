@@ -1,5 +1,5 @@
 <?php
-define("URLROOT", 'http://www.project-p4.gg/index/');
+define("URLROOT", 'http://www.project-p4.gg/');
 
 class Config {
   private $servername = "localhost";
