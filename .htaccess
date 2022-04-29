@@ -1,4 +1,6 @@
+
 Options +FollowSymLinks
 RewriteEngine on
+
 RewriteRule ^page/(.*) /index.php?page=$1
 RewriteRule ^page/(.*)/ /index.php?page=$1
