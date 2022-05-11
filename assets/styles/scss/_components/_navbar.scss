@@ -4,21 +4,24 @@ body {
   margin: $heightnav 0 0 0;
 }
 header {
-  display: flex;
+  //display: flex;
   background-color: var(--color-1);
   position: absolute;
   margin: 0;
   inset: 0 0 auto 0;
   nav {
-    display: flex;
+    margin-right:2rem;
     ul {
       display: flex;
-      flex-direction: row;
+      justify-content: flex-end;
       list-style-type: none;
       gap: 3rem;
+      float: right;
+      width: 100%;
       li {
         a {
           text-decoration: none;
+          color: white;
         }
       }
     }

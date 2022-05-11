@@ -7,23 +7,25 @@ body {
 }
 
 header {
-  display: flex;
   background-color: var(--color-1);
   position: absolute;
   margin: 0;
   inset: 0 0 auto 0;
 }
 header nav {
-  display: flex;
+  margin-right: 2rem;
 }
 header nav ul {
   display: flex;
-  flex-direction: row;
+  justify-content: flex-end;
   list-style-type: none;
   gap: 3rem;
+  float: right;
+  width: 100%;
 }
 header nav ul li a {
   text-decoration: none;
+  color: white;
 }
 
 .form {
@@ -64,7 +66,6 @@ footer {
   background-color: var(--color-1);
 }
 
-header,
 footer {
   display: grid;
   grid-template-columns: minmax(0.5rem, 1fr) minmax(1px, 700px) minmax(0.5rem, 1fr);
