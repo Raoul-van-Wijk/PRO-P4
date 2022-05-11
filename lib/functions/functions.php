@@ -1,12 +1,24 @@
 <?php
-function loadPages($page) {
-  if(isset($page) && file_exists("./views/templates/{$page}.php")){
-    include("./views/templates/{$page}.php");
+function loadTemplate() {
+  $page = $_GET['page'];
+  if(isset($page)) {
+    $url = explode("/", $page);
+    if(file_exists("./views/templates/{$url[0]}.php")) {
+      include("./views/templates/{$url[0]}.php");
+    } else {
+      include("./views/templates/lr.php");
+    }
   }
-  if(isset($_GET['lr']) && file_exists("./views/organisms/{$_GET['lr']}.php")){
-    include("./views/organisms/{$_GET['lr']}.php");
+}
+
+function loadContent() {
+  $page = $_GET['page'];
+  if(isset($page)) {
+    $url = explode("/", $page);
+    if(file_exists("./views/organisms/{$url[1]}.php")) {
+      include("./views/organisms/{$url[1]}.php");
+    }
   }
-  if(empty($page) || !file_exists("./views/templates/{$page}.php"))include("./views/templates/home.php");
 }
 
 
