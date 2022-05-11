@@ -63,8 +63,10 @@ class ProfileCustomization extends Config
       $stmt->bindParam(":pfp", $this->pfp);
       $stmt->bindParam(":userID", $this->userID);
       if($stmt->execute()) {
+        return 'Succes';
         // succesfully updated pfp
       } else {
+        return 'Failed';
         // something went wrong
       }
     }
