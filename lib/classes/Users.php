@@ -1,5 +1,4 @@
 <?php
-  namespace application\classes;
 
 class Users extends Config {
   public function getUsers() {
