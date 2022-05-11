@@ -1,16 +1,15 @@
 <nav>
   <ul>
-    <li><a href="<?php echo URLROOT;?>page/home">home</a></li>
-    <li><a href="<?php echo URLROOT;?>page/chat">Chat</a></li>
+    <li><a href="<?php echo URLROOT;?>page/main/home">home</a></li>
+    <li><a href="<?php echo URLROOT;?>page/main/chat">Chat</a></li>
 
     <?php
     if(isset($_SESSION['userID'])) {
       echo '<li><a href="index.php?logout=true">Logout</a></li>';
     } else {
-      $url = $_GET['page'];
       echo "    
-        <li><a href='?lr=login'>login</a></li>
-        <li><a href='?lr=register'>Register</a></li>";
+        <li><a href='".URLROOT."page/lr/login'>login</a></li>
+        <li><a href='".URLROOT."page/lr/register'>Register</a></li>";
     }
     ?>
   </ul>
