@@ -11,8 +11,8 @@ class Users extends Config {
 
   function registerNewUser($username, $password, $age) {  
     if(empty($username) || empty($password)) {
-      return "One or more fields are empty";
       header("Refresh: 2; ".URLROOT."page/lr/register");
+      return "One or more fields are empty";
     } else {
       $sql = "INSERT INTO `users` (`userID`, `username`, `password`, `age`) VALUES (NULL, :username, :password, :age)";
       $stmt = $this->connect()->prepare($sql);
@@ -25,8 +25,10 @@ class Users extends Config {
       $stmt->bindParam(':password', $pwh);
       $stmt->bindParam(':age', $age);
       if($stmt->execute()) {
+        header("Refresh: 3; ".URLROOT."page/lr/login");
         return "Succesfully created a new user";
       } else {
+        header("Refresh: 3; ".URLROOT."page/lr/login");
         return "An error occured";
       }
       header("Refresh: 3; ".URLROOT."page/lr/login");
@@ -72,7 +74,7 @@ class Users extends Config {
 
   public function logoutUser() {
     session_destroy();
-    return "succesfully logged out";
     header("Refresh: 1; ". URLROOT ."page/lr/login");
+    return "succesfully logged out";
   }
 }
