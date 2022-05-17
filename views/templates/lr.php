@@ -1,0 +1,3 @@
+<main>
+    <?php loadContent() ?>
+  </main>
