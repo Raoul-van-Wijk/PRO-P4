@@ -14,18 +14,43 @@ header {
 }
 header nav {
   margin-right: 2rem;
+  display: flex;
+  align-items: center;
+}
+header nav img {
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin-left: 0.5rem;
 }
 header nav ul {
   display: flex;
   justify-content: flex-end;
   list-style-type: none;
   gap: 3rem;
-  float: right;
   width: 100%;
 }
-header nav ul li a {
+header nav ul li {
+  position: relative;
+}
+header nav ul li div#dropdownMenu {
+  display: none;
+}
+header nav ul li a, header nav ul li div {
   text-decoration: none;
   color: white;
+  display: block;
+}
+header nav ul li a:hover::after, header nav ul li a:focus::after, header nav ul li a.active::after, header nav ul li div:hover::after, header nav ul li div:focus::after, header nav ul li div.active::after {
+  content: "";
+  position: absolute;
+  inset: 25px 0 0 0;
+  height: 4px;
+  background-color: #6b7aff;
+  border-radius: 5rem;
+}
+header nav ul li div#dropdownTag:hover div#dropdownMenu {
+  display: block;
 }
 
 .form {

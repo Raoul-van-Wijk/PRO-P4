@@ -5,7 +5,7 @@
     <?php
     if(isset($_POST['submit'])) {
       $users = new Users();
-      $users->loginUsers($_POST['username'], $_POST['password']);
+      echo $users->loginUsers($_POST['username'], $_POST['password']);
     }
   ?>
     <button type="submit" name="submit">Login</button>
