@@ -35,13 +35,12 @@ class Users extends Config {
 
   public function loginUsers($username, $password) {
     if(isset($_SESSION['userID'])) {
-      return "Already logged in";
       header("Refresh: 2; ".URLROOT."page/main/dashboard");
-      return false;
+      return "Already logged in";
     }
     if(empty($username) || empty($password)) {
-      return "One or more fields are empty";
       header("Refresh: 2; ".URLROOT."page/lr/register");
+      return "One or more fields are empty";
     } else {
       $sql = "SELECT * FROM `users` WHERE `username` = :username";
       $stmt = $this->connect()->prepare($sql);
@@ -49,22 +48,23 @@ class Users extends Config {
       $stmt->execute();
       $count = $stmt->rowCount();
       if($count == 0) {
-        return "User does not exist";
         header("Refresh: 2; ".URLROOT."page/lr/register");
+        return "User does not exist";
       } else {
         $loginCredentials = $stmt->fetch();
         if(!password_verify($password, $loginCredentials['password'])) {
-          return "Password does not match";
           header("Refresh: 2; ".URLROOT."page/lr/login");
+          return "Password does not match";
         } else {
           if($loginCredentials['firstLogin'] == 1) {
             $mkNewProfile = new ProfileCustomization($loginCredentials['userID']);
             $mkNewProfile->addUserProfile();
           }
-          return 'You succesfully logged in';
           $_SESSION['userID'] = $loginCredentials['userID'];
           $_SESSION['username'] = $username;
+          $_SESSION['userrole'] = $loginCredentials['userrole'];
           header("Refresh: 2; ".URLROOT."page/main/dashboard");
+          return 'You succesfully logged in';
         }
       }
     }
