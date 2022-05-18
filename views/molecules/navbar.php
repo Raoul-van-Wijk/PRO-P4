@@ -17,7 +17,6 @@
     <li><div id="dropdownTag">Username 
       <div id="dropdownMenu">
         <a href="">my profile</a>
-
         <?php 
           if($_SESSION['userrole'] == 'admin' || $_SESSION['userrole'] ==  'root') {
             echo '<a href="">admin dashboard</a>';
