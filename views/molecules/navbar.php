@@ -19,7 +19,7 @@
         <a href="">my profile</a>
         <?php 
           if($_SESSION['userrole'] == 'admin' || $_SESSION['userrole'] ==  'root') {
-            echo '<a href="">admin dashboard</a>';
+            echo '<a href="'.  URLROOT . 'page/main/dashboard">admin dashboard</a>';
           }
         ?>
         <a href="&logout=true">logout</a>
