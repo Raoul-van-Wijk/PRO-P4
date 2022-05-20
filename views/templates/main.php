@@ -8,4 +8,10 @@
   <main>
     <?php loadContent() ?>
   </main>
-<footer><?php require_once('./views/molecules/footer.php'); ?></footer>
+
+
+<?php
+if($_GET['page'] !== 'main/chat') {
+  require_once('./views/molecules/footer.php');
+}
+?>
