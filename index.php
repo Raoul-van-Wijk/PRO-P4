@@ -11,12 +11,12 @@
   <title>Project-p4</title>
   <link rel="stylesheet" href="<?php echo URLROOT ?>assets/styles/css/style.css">
   <!-- link javascript -->
-  <script src="<?php echo URLROOT ?>assets/js/app.js"></script>
-  <script src="<?php echo URLROOT ?>assets/js/ajax.js"></script>
+  <script defer src="<?php echo URLROOT ?>assets/js/app.js"></script>
+  <script defer src="<?php echo URLROOT ?>assets/js/ajax.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
   <link rel="stylesheet" href="<?= $_SERVER['DOCUMENT_ROOT'] ?>/views/molecules/test.css">
 </head>
-<body>
+<body class="<?php echo checkPage() ?>">
   <?php loadTemplate(); ?>
 </body>
 </html>
