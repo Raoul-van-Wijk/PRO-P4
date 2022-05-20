@@ -1,0 +1,41 @@
+.container {
+  // margin-top: 1rem;
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  .contacts {
+  width: 30%;
+  background-color: #494949;
+  overflow: scroll;
+    .contact {  
+      width: 100%;
+      height: 5rem;
+      background-color: #494949;
+      color: rgb(0, 0, 0);
+      border: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.3em;
+      font-weight: 500;
+      color: white;
+      .cpfp {
+        width: 4rem;
+        height: auto;
+        border-radius: 2rem;
+      }
+      &:hover {
+        background-color: rgb(61, 61, 61);
+      }
+    }
+  }
+  .chat {
+  width: 70%;
+  background-color: white;
+  }
+}
+
+
