@@ -22,4 +22,12 @@ function loadContent() {
 }
 
 
+function checkPage() {
+  if(isset($_GET['page'])) {
+    if($_GET['page'] == 'main/chat') {
+      return "of-hidden";
+    }
+  }
+}
+
 
