@@ -4,9 +4,8 @@ class Users extends Config {
   public function getUsers() {
     $sql = "SELECT * FROM users";
     $stmt = $this->connect()->query($sql);
-    while($row = $stmt->fetch()) {
-      return $row['username'].'</br>';
-    }
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
   }
 
   function registerNewUser($username, $password, $age) {  
