@@ -1,0 +1,21 @@
+.btn-1 {
+  background: none;
+  border: 2px solid var(--color-3);
+  border-radius: 1rem;
+  color: var(--color-3);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.5;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  width: 100%;
+  cursor: pointer;
+  &:hover,
+  &:focus,
+  &:active {
+    background: var(--color-3);
+    color: white;
+  }
+}
