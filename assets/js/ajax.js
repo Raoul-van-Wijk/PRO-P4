@@ -2,23 +2,34 @@
 const contactButtons = document.querySelectorAll('.contact');
 let userID = document.querySelector('[data-userid]').getAttribute('data-userid')
 
-const msgInput = document.querySelector('#msg-input');
+const msgInput = document.querySelector('[data-message-input]');
 
 
-  const sendButton = document.querySelector('#send');
+  const sendButton = document.querySelector('[data-message-button]');
   sendButton.addEventListener('click', (event) => {
   let toUser = toUserID();
   let msg = msgInput.value;
   sendMsg(msg, toUser);
 })
 
+  msgInput.addEventListener('keydown', (event) => {
+    if(event.key === 'Enter') {
+      let toUser = toUserID();
+      let msg = msgInput.value;
+      console.log(msg);
+      sendMsg(msg, toUser);
+    }
+  })
+
 function toUserID() {
-  return document.querySelector('[data-toUser]').getAttribute('data-toUser');
+  return document.querySelector('.active-user').getAttribute('data-toUser');
 }
 
 
 contactButtons.forEach(button => {
   button.addEventListener('click', (event) => {
+    removeClass(contactButtons, 'active-user')
+    button.classList.add('active-user');
     let fuserID = button.value;
     getMsg(fuserID, userID);
   })
@@ -31,19 +42,19 @@ $(document).ready(function() {
     var func = 'get-msg';
     var FromUser = parseInt(fromUser);
     var UserID = parseInt(userID);
-    $("#chat").load("http://www.project-p4.gg/lib/ni/ajax-controller.php", {
+    $("[data-message]").load("http://www.project-p4.gg/lib/ni/ajax-controller.php", {
         func: func,
         fromUser: FromUser,
         UserID: UserID
     })
-    let iid = setInterval( function() {
-      $("#chat").load("http://www.project-p4.gg/lib/ni/ajax-controller.php", {
+    let iid = setInterval( () => {
+      $("[data-message]").load("http://www.project-p4.gg/lib/ni/ajax-controller.php", {
         func: func,
         fromUser: FromUser,
         UserID: UserID
     })
     
-  } ,10000)
+  } ,100)
   contactButtons.forEach(button => {
     button.addEventListener('click', (event) => {
       clearInterval(iid);
@@ -55,7 +66,6 @@ $(document).ready(function() {
 
 function sendMsg (msg, toUser) {
   $(document).ready(function() {
-    console.log(msg, toUser);
       var func = 'send-msg';
       $.ajax({
           url: 'http://www.project-p4.gg/lib/ni/ajax-controller.php',
@@ -76,7 +86,11 @@ function sendMsg (msg, toUser) {
 
 
 
-
+const removeClass = (arr, className) => {
+  arr.forEach((item) => {
+    item.classList.remove(className)
+  })
+}
 
 
 
