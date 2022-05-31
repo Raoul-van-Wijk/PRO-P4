@@ -5,7 +5,7 @@
 ?>
 
 <header><?php require_once('./views/molecules/navbar.php'); ?></header>
-  <main>
+  <main class="<?php echo checkPage() ?>">
     <?php loadContent() ?>
   </main>
 

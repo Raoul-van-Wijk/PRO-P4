@@ -1,0 +1,20 @@
+main.lr {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: 'l r';
+  grid-template-columns: 50%, 1fr;
+  position: absolute;
+  inset: 0 0 0 0;
+  width: 100%;
+  .left {
+    grid-area: l;
+    width: 50%;
+  }
+  .right {
+    grid-area: r;
+    width: 59%;
+}}
