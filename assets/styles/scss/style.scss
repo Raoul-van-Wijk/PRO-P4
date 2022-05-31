@@ -77,27 +77,5 @@ footer > * {
 
 .of-hidden {
 	overflow: hidden;
-div.dashboard {
-	background-color: #535353;
-	color: white;
-							
-	position: absolute;
-	right: 30%;
-
-	width: 50%;
-	height: auto;
-
-	display: flex;
-	flex-direction: column;
-
-	table {
-		tbody {
-			tr {
-				background-color: rgb(186, 186, 186);
-				td {
-
-				}
-			}
-		}
-	}
 }
+

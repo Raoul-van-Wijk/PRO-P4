@@ -5,3 +5,7 @@ composer.phar
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 # composer.lock
 *.css
+assets/styles/css/style.css.map
+assets/styles/css/style.css
+assets/styles/css/style.css.map
+assets/styles/css/style.css
