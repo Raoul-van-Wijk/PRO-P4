@@ -22,10 +22,13 @@ function loadContent() {
 }
 
 
-function checkPage() {
+function checkPage($page = '') {
+  if($page == 'index') {
+    // return 'of-hidden';
+  }
   if(isset($_GET['page'])) {
     if($_GET['page'] == 'main/chat') {
-      return "of-hidden";
+      return "chat";
     }
   }
 }
