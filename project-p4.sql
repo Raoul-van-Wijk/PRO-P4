@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `project-p4`.`users` (
   `userrole` ENUM('root', 'admin', 'user', '') NOT NULL DEFAULT 'user',
   `firstLogin` INT(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`userID`),
-  UNIQUE INDEX `username` (`username` ASC) VISIBLE)
+  UNIQUE INDEX `username` (`username` ASC) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = latin1;
@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS `project-p4`.`chat` (
   `FromUserID` INT(11) NOT NULL,
   `ToUserID` INT(11) NOT NULL,
   `Message` VARCHAR(2500) NOT NULL,
-  UNIQUE INDEX `chatID` (`chatID` ASC) VISIBLE,
-  INDEX `FromUserID` (`FromUserID` ASC) VISIBLE,
-  INDEX `ToUserID` (`ToUserID` ASC) VISIBLE,
+  UNIQUE INDEX `chatID` (`chatID` ASC) ,
+  INDEX `FromUserID` (`FromUserID` ASC) ,
+  INDEX `ToUserID` (`ToUserID` ASC) ,
   CONSTRAINT `fk_FromUserID`
     FOREIGN KEY (`FromUserID`)
     REFERENCES `project-p4`.`users` (`userID`)
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `project-p4`.`userfriends` (
   `fuserID` INT(11) NOT NULL,
   `friendUserID` INT(11) NOT NULL,
   PRIMARY KEY (`friendID`),
-  INDEX `userID` (`fuserID` ASC) VISIBLE,
-  INDEX `friendUserID` (`friendUserID` ASC) VISIBLE,
+  INDEX `userID` (`fuserID` ASC) ,
+  INDEX `friendUserID` (`friendUserID` ASC) ,
   CONSTRAINT `fk_uf_fuserID`
     FOREIGN KEY (`friendUserID`)
     REFERENCES `project-p4`.`users` (`userID`)
