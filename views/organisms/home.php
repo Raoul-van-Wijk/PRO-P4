@@ -1,6 +1,7 @@
 <?php
 $friends = new Chat($_SESSION['userID']);
 $user = new Users();
+$files = new Files($_SESSION['username']);
 
 if(isset($_GET['friendID'])) { $userID = $_GET['friendID']; } 
 else { $userID = $_SESSION['userID']; }
@@ -42,9 +43,29 @@ $currentProfile = $pfp->getUserProfile();
 <div data-edit-profile>
   <div>
     <form action="" method="post" enctype="multipart/form-data">
-      <input type="file" name="profilePicture">
-      <input type="file" name="banner">
+      <input type="file" name="profilePicture" accept="image/*">
+      <input type="file" name="banner" accept="image/*">
       <input type="text" name="bio">
+      <button type="submit" name="submit"></button>
     </form>
+    <?php
+    if(isset($_POST['submit'])) {
+      if(!$_FILES['profilePicture']['size'] == 0) {
+        echo 'gg';
+        $profilePicture = $files->renameImage($_FILES['profilePicture']);
+        if($profilePicture !== false) {
+          $pfp->updateProfilePicture($profilePicture);
+          header("Location: ".URLROOT."page/main/home");
+        }        
+      }
+      if(!$_FILES['banner']['size'] == 0) {
+        $banner = $files->renameImage($_FILES['banner']);
+        if($banner !== false) {
+          $pfp->updateBanner($banner);
+          header("Location: ".URLROOT."page/main/home");
+        }
+      }
+    }
+    ?>
   </div>
 </div>

@@ -21,6 +21,8 @@ main.home {
       height: 320px;
       border-radius: 1rem 1rem 0 0;
       display: block;
+      object-fit: cover;
+      object-position: center;
     }
     .content {
       background-color: var(--color-2);
@@ -33,6 +35,8 @@ main.home {
         height: 8rem;
         width: 8rem;
         border-radius: 100%;
+        object-fit: cover;
+        object-position: center;
       }
       .row {
         margin-top: 4rem;

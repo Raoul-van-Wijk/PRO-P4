@@ -8,6 +8,8 @@ function loadTemplate() {
     } else {
       include("./views/templates/lr.php");
     }
+  } else {
+    include("./views/templates/lr.php");
   }
 }
 

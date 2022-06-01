@@ -53,27 +53,28 @@ class ProfileCustomization extends Config
   }
 
   // change pfp function
-  public function updateProfilePicture() {
-    if(empty($this->pfp) || !isset($_SESSION['userID'])) {
+  public function updateProfilePicture($pfp) {
+    if(empty($pfp) || !isset($_SESSION['userID'])) {
       // pfp is empty
     }
-    if(!empty($this->pfp) || isset($_SESSION['userID'])) {
+    if(!empty($pfp) || isset($_SESSION['userID'])) {
       $sql = "UPDATE `userprofile` SET `profilePicture` = :pfp WHERE `userprofile`.`userID` = :userID";
       $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(":pfp", $this->pfp);
+      $stmt->bindParam(":pfp", $pfp);
       $stmt->bindParam(":userID", $this->userID);
       if($stmt->execute()) {
-        return 'Succes';
+        return true;
         // succesfully updated pfp
       } else {
-        return 'Failed';
+        return false;
         // something went wrong
       }
     }
   }
 
   // change backgroundImage function
-  public function UpdateBackgroundImage() {
+  public function UpdateBackgroundImage($bgimg) {
+    $this->bgimg = $bgimg;
     if(empty($this->bgimg) || !isset($_SESSION['userID'])) {
       // bgimg is empty
     }
@@ -83,9 +84,9 @@ class ProfileCustomization extends Config
       $stmt->bindParam(":bgimg", $this->bgimg);
       $stmt->bindParam(":userID", $this->userID);
       if($stmt->execute()) {
-        // succesfully updated bgimg
+        return true;
       } else {
-        // something went wrong
+        return false;
       }
     }
   }
@@ -102,13 +103,13 @@ class ProfileCustomization extends Config
 
   public function checkProfilePicture($profilePicture) {
     if(is_null($profilePicture)) return '../../assets/img/logo.png';
-    if(!file_exists($profilePicture)) return '../../assets/img/logo.png';
-    return $profilePicture;
+    if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/'.$profilePicture)) return '../../assets/img/logo.png';
+    return '../../'.$profilePicture;
   }
 
   public function checkBanner($backGroundImage) {
-    if(is_null($backGroundImage)) return '../../assets/img/default-banner.jpg';
-    if(!file_exists($backGroundImage)) return '../../assets/img/default-banner.jpg';
-    return $backGroundImage;
+    if(is_null($backGroundImage) || empty($backGroundImage)) return '../../assets/img/default-banner.jpg';
+    if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/'.$backGroundImage)) return '../../assets/img/default-banner.jpg';
+    return '../../'.$backGroundImage;
   }
 }
