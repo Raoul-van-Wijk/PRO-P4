@@ -1,5 +1,8 @@
 <?php 
 
+    // $like = new Users;
+    // $like->likeUser('1');
+
     $role = $_SESSION['userrole'];
     if(!$role == 'admin' || !$role == 'root') {
         header("location: ".URLROOT."page/main/home");
@@ -17,9 +20,16 @@
                 <input type="submit">
             </form>';
             if (isset($_GET['time'])) {
+                if($_GET['time'] < 1) {
+                    $time = 1;
+                } else {
+                    $time = $_GET['time'];
+                }
+
                 if (isset($_GET['id'])) {
+                    $id = $_GET['id'];
                     $timeout = new Users;
-                    $timeout->timeoutUser($_GET['id'], $_GET['time']);
+                    $timeout->timeoutUser($id, $time);
                 }
             }
         }
@@ -51,6 +61,7 @@
         ."</td></tr>";
     }
 ?>
+
 
 <div class="dashboard">
 <table>
