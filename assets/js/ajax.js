@@ -10,6 +10,7 @@ const msgInput = document.querySelector('[data-message-input]');
   let toUser = toUserID();
   let msg = msgInput.value;
   sendMsg(msg, toUser);
+  msgInput.value = '';
 })
 
   msgInput.addEventListener('keydown', (event) => {
@@ -18,6 +19,7 @@ const msgInput = document.querySelector('[data-message-input]');
       let msg = msgInput.value;
       console.log(msg);
       sendMsg(msg, toUser);
+      msgInput.value = '';
     }
   })
 }

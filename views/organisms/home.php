@@ -42,9 +42,9 @@ $currentProfile = $pfp->getUserProfile();
 <div data-edit-profile>
   <div>
     <form action="" method="post" enctype="multipart/form-data">
-      <input type="file">
-      <input type="file">
-      <input type="file">
+      <input type="file" name="profilePicture">
+      <input type="file" name="banner">
+      <input type="text" name="bio">
     </form>
   </div>
 </div>
