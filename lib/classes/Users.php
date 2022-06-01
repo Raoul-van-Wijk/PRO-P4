@@ -61,7 +61,19 @@ class Users extends Config {
             var_dump($loginCredentials);exit;
             $mkNewProfile = new ProfileCustomization($loginCredentials['userID']);
             $mkNewProfile->addUserProfile();
-          } elseif ($loginCredentials['firstLogin'] == 2 || $loginCredentials['firstLogin'] == 3) {
+          } elseif ($loginCredentials['firstLogin'] == 2) {
+            echo 'Timeout until';
+            echo $loginCredentials['timeoutTime'];
+            $timestamp = strtotime('+2 hour'); 
+            $hourMin = date('H:i', $timestamp);
+            if($loginCredentials['timeoutTime'] <= $hourMin) {
+              $this->timeoutUser($loginCredentials['userID'], false);
+            } else {
+              exit();
+            }
+
+            //exit();
+          } elseif ($loginCredentials['firstLogin'] == 3) {
             header("location: ".URLROOT."page/ban");
             exit();
           }
@@ -99,22 +111,54 @@ class Users extends Config {
     return $row;
   }
 
-  public function timeoutUser($id) {
+  public function timeoutUser($id, $time) {
     $status = self::userStatus($id);
 
-    $sql = '';
+    $sql = "SELECT * FROM `users` WHERE `userID` = :id";
+
+    $timestamp = strtotime('+' . 2+$time . ' hour'); 
+    $hourMin = date('H:i', $timestamp); 
+     
+    $sql_t = false;
 
     if($status[0]['firstLogin'] == 0) {
-      $sql = "UPDATE `users` SET `firstLogin` = 2 where `userID` = :id";
+      $sql = "UPDATE `users` SET `firstLogin` = 2, `timeoutTime` = :time where `userID` = :id";
+      $sql_t = true;
     } elseif ($status[0]['firstLogin'] == 2) {
+      $sql = "UPDATE `users` SET `firstLogin` = 0, `timeoutTime` = 0 where `userID` = :id";
+    } elseif ($status[0]['firstLogin'] == 3) {
+      header("Refresh: 1; ". URLROOT ."page/main/adminDashboard");
+    }
+    $stmt = $this->connect()->prepare($sql);
+    if($sql_t) {
+      $stmt->bindParam(':time', $hourMin);
+    }
+
+    $stmt->bindParam(':id', $id);
+
+    $stmt->execute();
+    header("Refresh: 1; ". URLROOT ."page/main/adminDashboard");
+    return "succesfully timed-out user";
+  }
+
+  public function banUser($id) {
+    $status = self::userStatus($id);
+
+    $sql = "SELECT * FROM `users` WHERE `userID` = :id";
+
+    if($status[0]['firstLogin'] == 0) {
+      $sql = "UPDATE `users` SET `firstLogin` = 3 where `userID` = :id";
+    } elseif ($status[0]['firstLogin'] == 3) {
       $sql = "UPDATE `users` SET `firstLogin` = 0 where `userID` = :id";
+    } elseif ($status[0]['firstLogin'] == 2) {
+      header("Refresh: 1; ". URLROOT ."page/main/adminDashboard");
     }
 
     $stmt = $this->connect()->prepare($sql);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
-    header("Refresh: 1; ". URLROOT ."page/main/dashboard");
-    return "succesfully timed-out user";
+    header("Refresh: 1; ". URLROOT ."page/main/adminDashboard");
+    return "succesfully banned user";
   }
 
   public function userStatus($id) {
@@ -124,4 +168,5 @@ class Users extends Config {
     $stmt->execute();
     return $stmt->fetchAll();
   }
+  
 }
