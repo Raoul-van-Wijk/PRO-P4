@@ -1,7 +1,7 @@
 
 const contactButtons = document.querySelectorAll('.contact');
 let userID = document.querySelector('[data-userid]').getAttribute('data-userid')
-
+if(document.querySelector('[data-message-input]')) {
 const msgInput = document.querySelector('[data-message-input]');
 
 
@@ -20,7 +20,7 @@ const msgInput = document.querySelector('[data-message-input]');
       sendMsg(msg, toUser);
     }
   })
-
+}
 function toUserID() {
   return document.querySelector('.active-user').getAttribute('data-toUser');
 }

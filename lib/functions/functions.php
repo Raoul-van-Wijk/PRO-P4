@@ -27,9 +27,8 @@ function checkPage($page = '') {
     // return 'of-hidden';
   }
   if(isset($_GET['page'])) {
-    if($_GET['page'] == 'main/chat') {
-      return "chat";
-    }
+    if($_GET['page'] == 'main/chat') { return "chat"; }
+    if($_GET['page'] == 'main/home') { return "home"; }
   }
 }
 

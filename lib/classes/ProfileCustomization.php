@@ -89,4 +89,26 @@ class ProfileCustomization extends Config
       }
     }
   }
+
+  public function getUserProfile() {
+    $sql = "SELECT * FROM `userprofile` WHERE `userprofile`.`userID` = :userID";
+    $stmt = $this->connect()->prepare($sql);
+    $stmt->bindParam(":userID", $this->userID);
+    if($stmt->execute()) {
+      $result = $stmt->fetchAll();
+      return $result;
+    }
+  }
+
+  public function checkProfilePicture($profilePicture) {
+    if(is_null($profilePicture)) return '../../assets/img/logo.png';
+    if(!file_exists($profilePicture)) return '../../assets/img/logo.png';
+    return $profilePicture;
+  }
+
+  public function checkBanner($backGroundImage) {
+    if(is_null($backGroundImage)) return '../../assets/img/default-banner.jpg';
+    if(!file_exists($backGroundImage)) return '../../assets/img/default-banner.jpg';
+    return $backGroundImage;
+  }
 }
