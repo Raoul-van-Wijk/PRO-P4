@@ -10,7 +10,7 @@ require_once '1Config.php';
       $this->userID = $userID;
     }
 
-    public function sendMsg(int | string $toUser, string $message, $userID) {
+    public function sendMsg(int | string $toUser, string $message, int $userID) {
       if(isset($message) && isset($toUser)) {
         $fromUser = $userID;
         $sql = "INSERT INTO `chat` (`chatID`, `FromUserID`, `ToUserID`, `Message`) VALUES (NULL, :fromuser, :toUser, :message)";
