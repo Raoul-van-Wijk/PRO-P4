@@ -118,7 +118,7 @@ class Users extends Config {
 
     $timestamp = strtotime('+' . 2+$time . ' hour'); 
     $hourMin = date('H:i', $timestamp); 
-     
+
     $sql_t = false;
 
     if($status[0]['firstLogin'] == 0) {
@@ -168,5 +168,25 @@ class Users extends Config {
     $stmt->execute();
     return $stmt->fetchAll();
   }
-  
+
+  public function likeUser($id) {
+    $sql = "SELECT * FROM `userprofile` WHERE `userID` = :id";
+
+    $stmt = $this->connect()->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $row = $stmt->fetchAll();
+
+    $likes = $row[0]['likes'] + 1;
+
+    $sql = "UPDATE `userprofile` SET `likes` = :likes WHERE `userID` = :id";
+
+    $stmt = $this->connect()->prepare($sql);
+    $stmt->bindParam(':likes', $likes);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+
+    header("Refresh: 1; ". URLROOT ."page/main/profile/". $id);
+  }
+
 }
