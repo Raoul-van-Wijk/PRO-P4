@@ -14,7 +14,7 @@
   <ul>
     <li><a href="<?php echo URLROOT;?>page/main/home">home</a></li>
     <li><a href="<?php echo URLROOT;?>page/main/chat">Chat</a></li> 
-    <li><div id="dropdownTag" data-userid="<?php echo $_SESSION['userID']?>">Username 
+    <li><div id="dropdownTag" data-userid="<?php echo $_SESSION['userID']?>"><?php echo $_SESSION['username']?> 
       <div id="dropdownMenu">
         <a href="">my profile</a>
         <?php 
