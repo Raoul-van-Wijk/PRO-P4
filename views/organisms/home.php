@@ -28,10 +28,11 @@ $currentProfile = $pfp->getUserProfile();
   <img class="pfp" src="<?php echo $pfp->checkProfilePicture($currentProfile[0]['profilePicture']) ?>" alt="No img">
   <p><?php echo $currentUser[0]['username'] . ', ' . $currentUser[0]['age']; ?></p>
   <div class="row">
-    <div class="bio"><p><?php echo $currentProfile[0]['bio']; ?>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem totam aspernatur rerum a temporibus nostrum iusto officiis at odit nesciunt, dolore velit facere fuga fugiat explicabo sit hic, consequatur obcaecati? Architecto necessitatibus sit tenetur reprehenderit ducimus ea, veritatis debitis rem eos velit quo accusantium laborum pariatur aspernatur fugit reiciendis amet.</p></div>
+    <div class="bio"><p><?php echo $currentProfile[0]['bio']; ?></p></div>
     <div class="int">
       <?php if($currentUser[0]['userID'] == $_SESSION['userID']) : ?>
-        <button data-edit-profile-btn class="btn-1">Edit Profile</button>
+        <!-- <button data-edit-profile-btn class="btn-1">Edit Profile</button> -->
+        <button data-popup-open="edit-profile" class="btn-1">Edit Profile</button>
         <?php endif; ?>
       <button data-add-friend class="btn-1">Add Friend</button>
       <button data-like-profile class="btn-1">Like</button>
@@ -39,19 +40,18 @@ $currentProfile = $pfp->getUserProfile();
   </div>
 </div>
 </div>
-
-<div data-edit-profile>
-  <div>
-    <form action="" method="post" enctype="multipart/form-data">
+<?php if($currentUser[0]['userID'] == $_SESSION['userID']) : ?>
+  <dialog data-popup="edit-profile">
+    <form class="edit-profile" action="" method="post" enctype="multipart/form-data">
       <input type="file" name="profilePicture" accept="image/*">
       <input type="file" name="banner" accept="image/*">
       <input type="text" name="bio">
       <button type="submit" name="submit"></button>
+      <button class="btn-1" data-popup-close="edit-profile">close</button>
     </form>
     <?php
     if(isset($_POST['submit'])) {
       if(!$_FILES['profilePicture']['size'] == 0) {
-        echo 'gg';
         $profilePicture = $files->renameImage($_FILES['profilePicture']);
         if($profilePicture !== false) {
           $pfp->updateProfilePicture($profilePicture);
@@ -61,11 +61,15 @@ $currentProfile = $pfp->getUserProfile();
       if(!$_FILES['banner']['size'] == 0) {
         $banner = $files->renameImage($_FILES['banner']);
         if($banner !== false) {
-          $pfp->updateBanner($banner);
+          $pfp->updateBackgroundImage($banner);
           header("Location: ".URLROOT."page/main/home");
         }
       }
+      if(!empty($_POST['bio'])) {
+        $pfp->updateBio($_POST['bio']);
+        header("Location: ".URLROOT."page/main/home");
+      }
     }
     ?>
-  </div>
-</div>
+  </dialog>
+<?php endif; ?>

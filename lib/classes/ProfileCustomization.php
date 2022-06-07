@@ -35,10 +35,9 @@ class ProfileCustomization extends Config
     }
   }
   // change bio function
-  public function updateBio() {
-    if(empty($this->bio) || !isset($_SESSION['userID'])) {
-      // bio is empty
-    }
+  public function updateBio($bio) {
+    $this->bio = $bio;
+    if(empty($this->bio) || !isset($_SESSION['userID'])) return false;
     if(!empty($this->bio) || isset($_SESSION['userID'])) {
       $sql = "UPDATE `userprofile` SET `bio` = :bio WHERE `userprofile`.`userID` = :userID";
       $stmt = $this->connect()->prepare($sql);
@@ -46,8 +45,10 @@ class ProfileCustomization extends Config
       $stmt->bindParam(":userID", $this->userID);
       if($stmt->execute()) {
         // succesfully updated bio
+        return true;
       } else {
         // something went wrong
+        return false;
       }
     }
   }
