@@ -23,6 +23,19 @@ const msgInput = document.querySelector('[data-message-input]');
     }
   })
 }
+
+
+const likeButton = document.querySelector('[data-like-profile]');
+const profileName = document.querySelector('.content p').innerHTML;
+const likeEl = document.querySelector('[data-like-counter]');
+const newName = profileName.split(',')
+
+if(likeButton) {
+  likeButton.addEventListener('click', (event) => {
+    likeUser(newName[0]);
+  })
+}
+
 function toUserID() {
   return document.querySelector('.active-user').getAttribute('data-toUser');
 }
@@ -84,6 +97,26 @@ function sendMsg (msg, toUser) {
   });
 }
 
+function likeUser (username) {
+  $(document).ready(function() {
+      var func = 'like-user';
+      $.ajax({
+          url: 'http://www.project-p4.gg/lib/ni/ajax-controller.php',
+          method: 'POST',
+          data: {
+            func: func,
+            username: username
+          },
+          success: function(e) {
+            // let likes = e
+            likeEl.innerHTML = e.toString();
+            // console.log(e);
+          },
+        }
+      )
+  });
+}
+
 
 
 
@@ -93,6 +126,8 @@ const removeClass = (arr, className) => {
     item.classList.remove(className)
   })
 }
+
+
 
 
 
