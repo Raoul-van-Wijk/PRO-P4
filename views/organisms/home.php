@@ -6,9 +6,11 @@ $files = new Files($_SESSION['username']);
 if(isset($_GET['friendID'])) { $userID = $_GET['friendID']; } 
 else { $userID = $_SESSION['userID']; }
 
+
 $currentUser = $user->getUserByID($userID);
 $pfp = new ProfileCustomization($userID);
 $currentProfile = $pfp->getUserProfile();
+
 ?>
 
 <aside class="aside">
@@ -21,7 +23,6 @@ $currentProfile = $pfp->getUserProfile();
     <?php endforeach; ?>
 
 </aside>
-
 <div class="profile">
 <img class="banner" src="<?php echo $pfp->checkBanner($currentProfile[0]['backGroundImage']) ?>" alt="No img">
 <div class="content">

@@ -169,24 +169,21 @@ class Users extends Config {
     return $stmt->fetchAll();
   }
 
-  public function likeUser($id) {
-    $sql = "SELECT * FROM `userprofile` WHERE `userID` = :id";
+  public function likeUser($username) {
+    $sql = "SELECT * FROM `userprofile` WHERE `userID` = (SELECT `userID` FROM `users` WHERE `username` = :username)";
 
     $stmt = $this->connect()->prepare($sql);
-    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':username', $username);
     $stmt->execute();
     $row = $stmt->fetchAll();
+    $userID = $row[0]['userID'];
+    $likes = $row[0]['likes'] += 1;
 
-    $likes = $row[0]['likes'] + 1;
-
-    $sql = "UPDATE `userprofile` SET `likes` = :likes WHERE `userID` = :id";
+    $sql = "UPDATE `userprofile` SET `likes` = :likes WHERE `userID` = :userID";
 
     $stmt = $this->connect()->prepare($sql);
     $stmt->bindParam(':likes', $likes);
-    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':userID', $userID);
     $stmt->execute();
-
-    header("Refresh: 1; ". URLROOT ."page/main/profile/". $id);
   }
-
 }

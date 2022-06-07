@@ -1,8 +1,10 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/classes/Chat.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/classes/Users.php';
 
 
 $chat = new Chat();
+$user = new Users();
 
 switch ($_POST['func']) {
   case 'send-msg': 
@@ -37,14 +39,19 @@ switch ($_POST['func']) {
     }
     echo "</div>";
     break;
-
-  case 'commentUser':
-    $chat->commentUser($_POST['toUser']);
+  case "like-user":
+    $user->likeUser($_POST['username']);
+    // echo '<script> console.log("test"); </script>';
+    print_r($_POST);
     break;
+    case 'commentUser':
+      // $chat->commentUser($_POST['toUser']);
+      break;
 
     default:
     return false;
     break;
+
 }
 
 // {$user['pfp']}
