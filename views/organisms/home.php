@@ -37,6 +37,7 @@ $currentProfile = $pfp->getUserProfile();
         <?php endif; ?>
       <button data-add-friend class="btn-1">Add Friend</button>
       <button data-like-profile class="btn-1">Like</button>
+      <p data-like-counter><?php echo $pfp->getUserProfile()[0]['likes'] ?></p>
     </div>
   </div>
 </div>

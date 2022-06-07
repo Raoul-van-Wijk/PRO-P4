@@ -27,6 +27,7 @@ const msgInput = document.querySelector('[data-message-input]');
 
 const likeButton = document.querySelector('[data-like-profile]');
 const profileName = document.querySelector('.content p').innerHTML;
+const likeEl = document.querySelector('[data-like-counter]');
 const newName = profileName.split(',')
 
 if(likeButton) {
@@ -107,8 +108,9 @@ function likeUser (username) {
             username: username
           },
           success: function(e) {
-            // alert(e)
-            //console.log(func, username);
+            // let likes = e
+            likeEl.innerHTML = e.toString();
+            // console.log(e);
           },
         }
       )

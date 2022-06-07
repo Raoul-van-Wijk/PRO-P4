@@ -185,5 +185,7 @@ class Users extends Config {
     $stmt->bindParam(':likes', $likes);
     $stmt->bindParam(':userID', $userID);
     $stmt->execute();
+
+    return $likes;
   }
 }

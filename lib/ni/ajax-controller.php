@@ -40,9 +40,8 @@ switch ($_POST['func']) {
     echo "</div>";
     break;
   case "like-user":
-    $user->likeUser($_POST['username']);
-    // echo '<script> console.log("test"); </script>';
-    print_r($_POST);
+    $likes = $user->likeUser($_POST['username']);
+    echo $likes;
     break;
     case 'commentUser':
       // $chat->commentUser($_POST['toUser']);
