@@ -48,7 +48,7 @@ main.home {
           border: 2px solid var(--color-3);
           border-radius: 1rem;
           padding: .5rem;
-          max-width: 50%;
+          width: clamp(1px, 50%, 20rem);
           min-height: 15rem;
         }
         .int {
@@ -86,16 +86,16 @@ main.home {
 }
 
 
-[data-edit-profile] {
-  display: none;
-  position: absolute;
-  z-index: 2;
-  background-color: rgba(255, 255, 255, 0.5);
-  inset: 0 0 0 0;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  &.active {
-    display: block;
+
+  dialog {
+    padding: 10px;
+    margin: auto;
+    width: clamp(100px, 100vw, 700px);
+    height: fit-content;
+    border-radius: 10px;
+    .edit-profile {
+      display: flex;
+      flex-direction: column;
+
+    }
   }
-}
