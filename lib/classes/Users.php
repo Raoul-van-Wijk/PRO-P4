@@ -62,7 +62,7 @@ class Users extends Config {
             $mkNewProfile = new ProfileCustomization($loginCredentials['userID']);
             $mkNewProfile->addUserProfile();
           } elseif ($loginCredentials['firstLogin'] == 2) {
-            echo 'Timeout until';
+            echo 'Timeout until: ';
             echo $loginCredentials['timeoutTime'];
             $timestamp = strtotime('+2 hour'); 
             $hourMin = date('H:i', $timestamp);
@@ -74,7 +74,7 @@ class Users extends Config {
 
             //exit();
           } elseif ($loginCredentials['firstLogin'] == 3) {
-            header("location: ".URLROOT."page/ban");
+            echo 'You are banned!';
             exit();
           }
           $_SESSION['userID'] = $loginCredentials['userID'];
