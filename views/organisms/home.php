@@ -31,11 +31,16 @@ $currentProfile = $pfp->getUserProfile();
     <div class="bio"><p><?php echo $currentProfile[0]['bio']; ?></p></div>
     <div class="int">
       <?php if($currentUser[0]['userID'] == $_SESSION['userID']) : ?>
-        <!-- <button data-edit-profile-btn class="btn-1">Edit Profile</button> -->
         <button data-popup-open="edit-profile" class="btn-1">Edit Profile</button>
+      <?php endif; ?>
+      <?php if($currentUser[0]['userID'] != $_SESSION['userID']) : ?>
+        <?php if($user->checkFriendship($currentUser[0]['userID'])) : ?>
+        <button data-add-friend class="btn-1">Add Friend</button>
+        <?php elseif ($user->checkFriendship($currentUser[0]['userID']) == false) : ?>
+        <button data-unfriend class="btn-1">unfriend</button>
+        <button data-like-profile class="btn-1">Like</button>
         <?php endif; ?>
-      <button data-add-friend class="btn-1">Add Friend</button>
-      <button data-like-profile class="btn-1">Like</button>
+      <?php endif; ?>
     </div>
   </div>
 </div>

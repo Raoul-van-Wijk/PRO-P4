@@ -58,7 +58,7 @@ class Users extends Config {
           return "Password does not match";
         } else {
           if($loginCredentials['firstLogin'] == 1) {
-            var_dump($loginCredentials);exit;
+            var_dump($loginCredentials);
             $mkNewProfile = new ProfileCustomization($loginCredentials['userID']);
             $mkNewProfile->addUserProfile();
           } elseif ($loginCredentials['firstLogin'] == 2) {
@@ -187,6 +187,21 @@ class Users extends Config {
     $stmt->execute();
 
     header("Refresh: 1; ". URLROOT ."page/main/profile/". $id);
+  }
+
+  public function checkFriendship()
+  {
+    $sql = "SELECT * FROM `userfriends` WHERE `fuserID` = :userID AND `friendID` = :friendID";
+    $stmt = $this->connect()->prepare($sql);
+    $stmt->bindParam(':userID', $_SESSION['userID']);
+    $stmt->bindParam(':friendID', $_GET['id']);
+    $stmt->execute();
+    $row = $stmt->fetchAll();
+    if(count($row) > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

@@ -93,9 +93,9 @@ main.home {
     width: clamp(100px, 100vw, 700px);
     height: fit-content;
     border-radius: 10px;
+    box-shadow: 5px 5px 50px 100vw rgba(255,255,255,0.4);
     .edit-profile {
       display: flex;
       flex-direction: column;
-
     }
   }
