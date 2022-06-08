@@ -189,19 +189,37 @@ class Users extends Config {
     return $likes;
   }
 
-  public function checkFriendship()
+  public function checkFriendship($currentUser, $userID)
   {
-    $sql = "SELECT * FROM `userfriends` WHERE `fuserID` = :userID AND `friendID` = :friendID";
+    $sql = "SELECT * FROM `userfriends` WHERE `fuserID` = :userID AND `friendUserID` = :friendID";
     $stmt = $this->connect()->prepare($sql);
-    $stmt->bindParam(':userID', $_SESSION['userID']);
-    $stmt->bindParam(':friendID', $_GET['id']);
+    $stmt->bindParam(':userID', $userID);
+    $stmt->bindParam(':friendID', $currentUser);
     $stmt->execute();
-    $row = $stmt->fetchAll();
-    if(count($row) > 0) {
+    // $row = $stmt->fetchAll();
+    if($stmt->rowCount() > 0) {
       return true;
     } else {
       return false;
     }
   }
 
+  public function changeFriend($userID, $friend, $action)
+  {
+    if($action == 'add') {
+      $sql = "INSERT INTO `userfriends` (`friendID`, `fuserID`, `friendUserID`) VALUES (NULL, :userID, :friendUserID)";
+    } elseif ($action == 'remove') {
+      $sql = "DELETE FROM `userfriends` WHERE `fuserID` = :userID AND `friendUserID` = :friendUserID";
+    }
+    $stmt = $this->connect()->prepare($sql);
+    $stmt->bindParam(':userID', $userID);
+    $stmt->bindParam(':friendUserID', $friend);
+    try {
+      $stmt->execute();
+      return 'succes';  
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+      return 'something went wrong';
+    }
+  }
 }
