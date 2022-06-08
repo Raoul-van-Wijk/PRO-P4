@@ -6,7 +6,7 @@ class ProfileCustomization extends Config
   private string $bio;
   private string $pfp;
   private string $bgimg;
-  public function __Construct($userID, $bio = '', $pfp = '', $bgimg = '') {
+  public function __Construct($userID = 0, $bio = '', $pfp = '', $bgimg = '') {
     $this->userID = $userID;
     $this->bio = $bio;
     $this->pfp = $pfp;
@@ -112,5 +112,38 @@ class ProfileCustomization extends Config
     if(is_null($backGroundImage) || empty($backGroundImage)) return '../../assets/img/default-banner.jpg';
     if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/'.$backGroundImage)) return '../../assets/img/default-banner.jpg';
     return '../../'.$backGroundImage;
+  }
+
+
+  public function makeComment(int $profile, string $message)
+  {
+    $sql = "INSERT INTO `comment` (`profileID`, `userID`, `message`, `date`) VALUES (:profileID, :userID, :message, :date)";
+    $stmt = $this->connect()->prepare($sql);
+    $currentDate = date('Y-m-d H:i:s');
+    $stmt->bindParam(":profileID", $profile);
+    $stmt->bindParam(":userID", $this->userID);
+    $stmt->bindParam(":message", $message);
+    $stmt->bindParam(":date", $currentDate);
+    try {
+      $stmt->execute();
+      return true;
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+      return false;
+    }
+  }
+
+  public function getComments($profileID) {
+    $sql = "SELECT * FROM `comment` WHERE `comment`.`profileID` = :profileID";
+    $stmt = $this->connect()->prepare($sql);
+    $stmt->bindParam(":profileID", $profileID);
+    try {
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      return $result;
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+      return false;
+    }
   }
 }
