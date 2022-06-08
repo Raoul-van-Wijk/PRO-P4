@@ -1,10 +1,13 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/classes/Chat.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/classes/Users.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/classes/ProfileCustomization.php';
 
 
 $chat = new Chat();
 $user = new Users();
+if(isset($_POST['userID'])) $pfp = new ProfileCustomization($_POST['userID']);
+else $pfp = new ProfileCustomization();
 
 switch ($_POST['func']) {
   case 'send-msg': 
@@ -42,13 +45,24 @@ switch ($_POST['func']) {
   case "like-user":
     $likes = $user->likeUser($_POST['username']);
     echo $likes;
-    break;
-    case 'commentUser':
-      // $chat->commentUser($_POST['toUser']);
-      break;
+  break;
+  case "change-friend":
+    echo $user->changeFriend($_POST['userID'], $_POST['friend'], $_POST['action']);
+  break;
+  case 'make-comment':
+      echo $pfp->makeComment($_POST['profileID'], $_POST['comment']);
+  break;
+  case 'get-comment':
+    $comments = $pfp->getComments($_POST['profileID']);
+    foreach ($comments as $comment) {
+      echo "<div class='comment'>
+              <p>{$comment['message']}</p>
+              <p>{$comment['date']}</p>
+            </div>";
+    }
 
     default:
-    return false;
+    return 'No function specified'; 
     break;
 
 }
