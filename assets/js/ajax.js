@@ -1,3 +1,7 @@
+if(document.querySelector('[data-comment]')) {
+  let profileID = document.querySelector('[data-profile-id]').getAttribute('data-profile-id');
+  getComment(profileID);
+}
 
 const contactButtons = document.querySelectorAll('.contact');
 let userID = document.querySelector('[data-userid]').getAttribute('data-userid')
@@ -25,12 +29,30 @@ const msgInput = document.querySelector('[data-message-input]');
 }
 
 
+
+if (document.querySelector('[data-comment-input]')) {
+  const commentEl = document.querySelector('[data-comment-input]');
+  const commentButton = document.querySelector('[data-comment-button]');
+  commentButton.addEventListener('click', (event) => {
+    let comment = commentEl.value;
+    let userID = document.querySelector('[data-userid]').getAttribute('data-userid');
+    let profileID = document.querySelector('[data-profile-id]').getAttribute('data-profile-id');
+    makeComment(comment, userID, profileID);
+    commentEl.value = '';
+  })
+}
+
+
+
 const likeButton = document.querySelector('[data-like-profile]');
-const profileName = document.querySelector('.content p').innerHTML;
+let profileName = document.querySelector('.content p')
+if(profileName) { 
+  profileName = profileName.innerHTML;
+}
 const likeEl = document.querySelector('[data-like-counter]');
-const newName = profileName.split(',')
 
 if(likeButton) {
+  const newName = profileName.split(',')
   likeButton.addEventListener('click', (event) => {
     likeUser(newName[0]);
   })
@@ -40,7 +62,6 @@ function toUserID() {
   return document.querySelector('.active-user').getAttribute('data-toUser');
 }
 
-
 contactButtons.forEach(button => {
   button.addEventListener('click', (event) => {
     removeClass(contactButtons, 'active-user')
@@ -49,8 +70,6 @@ contactButtons.forEach(button => {
     getMsg(fuserID, userID);
   })
 })
-
-
 
 function getMsg (fromUser, userID) {
 $(document).ready(function() {
@@ -128,6 +147,74 @@ const removeClass = (arr, className) => {
 }
 
 
+const friendButtons = document.querySelectorAll('[data-change-friend]');
+
+if(friendButtons) {
+  friendButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      let action = button.value;
+      let friendID = button.getAttribute('data-change-friend');
+      let userID = document.querySelector('[data-userid]').getAttribute('data-userid');
+      changeFriend(userID, friendID, action);
+      if(button.value == 'add') {
+        button.value = 'remove';
+        button.innerHTML = 'unfriend';
+      } else {
+        button.value = 'add';
+        button.innerHTML = 'Add Friend';
+      }
+    })
+  })
+}
+
+
+function changeFriend (userID, friend, action) {
+  $(document).ready(function() {
+      var func = 'change-friend';
+      $.ajax({
+          url: 'http://www.project-p4.gg/lib/ni/ajax-controller.php',
+          method: 'POST',
+          data: {
+            func: func,
+            userID: userID,
+            friend: friend,
+            action: action
+          },
+          success: function(e) {
+            console.log(e);
+          },
+        }
+      )});
+  }
+
+  function makeComment(comment, userID, profileID) {
+    $(document).ready( () => {
+      var func = 'make-comment';
+      $.ajax({
+        url: 'http://www.project-p4.gg/lib/ni/ajax-controller.php',
+        method: 'POST',
+        data: {
+          func: func,
+          comment: comment,
+          userID: userID,
+          profileID: profileID
+        },
+        success: function(e) {
+          console.log(e);
+      }
+    })
+  })
+}
+
+function getComment(profileID) {
+  $(document).ready(function() {
+      var func = 'get-comment';
+      $("[data-comment]").load("http://www.project-p4.gg/lib/ni/ajax-controller.php", {
+        func: func,
+        profileID: profileID
+      })
+  });
+}
 
 
 
