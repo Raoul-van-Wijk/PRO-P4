@@ -10,7 +10,6 @@ else { $userID = $_SESSION['userID']; }
 $currentUser = $user->getUserByID($userID);
 $pfp = new ProfileCustomization($userID);
 $currentProfile = $pfp->getUserProfile();
-
 ?>
 
 <aside class="aside">
@@ -23,27 +22,31 @@ $currentProfile = $pfp->getUserProfile();
     <?php endforeach; ?>
 
 </aside>
-<div class="profile">
+<div data-profile-id="<?php echo $userID ?>" class="profile">
 <img class="banner" src="<?php echo $pfp->checkBanner($currentProfile[0]['backGroundImage']) ?>" alt="No img">
-<div class="content">
-  <img class="pfp" src="<?php echo $pfp->checkProfilePicture($currentProfile[0]['profilePicture']) ?>" alt="No img">
-  <p><?php echo $currentUser[0]['username'] . ', ' . $currentUser[0]['age']; ?></p>
-  <div class="row">
-    <div class="bio"><p><?php echo $currentProfile[0]['bio']; ?></p></div>
-    <div class="int">
-      <?php if($currentUser[0]['userID'] == $_SESSION['userID']) : ?>
-        <button data-popup-open="edit-profile" class="btn-1">Edit Profile</button>
-      <?php endif; ?>
-      <?php if($currentUser[0]['userID'] != $_SESSION['userID']) : ?>
-        <?php if($user->checkFriendship($currentUser[0]['userID'])) : ?>
-        <button data-add-friend class="btn-1">Add Friend</button>
-        <?php elseif ($user->checkFriendship($currentUser[0]['userID']) == false) : ?>
-        <button data-unfriend class="btn-1">unfriend</button>
-        <button data-like-profile class="btn-1">Like</button>
+  <div class="content">
+    <img class="pfp" src="<?php echo $pfp->checkProfilePicture($currentProfile[0]['profilePicture']) ?>" alt="No img">
+    <p><?php echo $currentUser[0]['username'] . ', ' . $currentUser[0]['age']; ?></p>
+    <div class="row">
+      <div class="bio"><p><?php echo $currentProfile[0]['bio']; ?></p></div>
+      <div class="int">
+        <?php if($currentUser[0]['userID'] == $_SESSION['userID']) : ?>
+          <button data-popup-open="edit-profile" class="btn-1">Edit Profile</button>
         <?php endif; ?>
-      <?php endif; ?>
-      <p data-like-counter><?php echo $pfp->getUserProfile()[0]['likes'] ?></p>
+        <?php if($currentUser[0]['userID'] != $_SESSION['userID']) : ?>
+          <?php if($user->checkFriendship($currentUser[0]['userID'], $_SESSION['userID']) == true) : ?>
+            <button data-change-friend="<?php echo $userID ?>" class="btn-1" value="remove">unfriend</button>
+            <?php endif; ?>
+            <?php if ($user->checkFriendship($currentUser[0]['userID'], $_SESSION['userID']) == false) : ?>
+              <button data-change-friend="<?php echo $userID ?>" class="btn-1" value="add">Add Friend</button>
+          <?php endif; ?>
+          <button data-like-profile class="btn-1">Like</button>
+        <?php endif; ?>
+        <p data-like-counter><?php echo $pfp->getUserProfile()[0]['likes'] ?></p>
+      </div>
     </div>
+  <div>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/views/molecules/comment.php' ?>
   </div>
 </div>
 </div>
@@ -53,7 +56,7 @@ $currentProfile = $pfp->getUserProfile();
       <input type="file" name="profilePicture" accept="image/*">
       <input type="file" name="banner" accept="image/*">
       <input type="text" name="bio">
-      <button type="submit" name="submit"></button>
+      <button class="btn-1" type="submit" name="submit">Update</button>
       <button class="btn-1" data-popup-close="edit-profile">close</button>
     </form>
     <?php
@@ -80,3 +83,7 @@ $currentProfile = $pfp->getUserProfile();
     ?>
   </dialog>
 <?php endif; ?>
+
+
+<?php
+
